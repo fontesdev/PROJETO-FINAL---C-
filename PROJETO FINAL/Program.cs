@@ -76,7 +76,7 @@ internal class Program
                             Repositor repositor = new Repositor(repositorEncontrado.password, repositorEncontrado.utilizador, repositorEncontrado.nome, funcionarios, livraria);
                             flag = true;
                             repositor.menu();
-                            Thread.Sleep(3000);
+                            menu();
                         }
                         else
                         {

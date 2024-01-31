@@ -35,14 +35,13 @@ namespace PROJETO_FINAL
             Console.WriteLine("1 - Criar Livro");//feito
             Console.WriteLine("2 - Consultar Livro");//feito
             Console.WriteLine("3 - Editar Livro");//feito
-            Console.WriteLine("4 - Comprar Livros");//feito - falta dar cw como o stor quer!
+            Console.WriteLine("4 - Comprar Livros");//feito
             Console.WriteLine("5 - Listagens");
             Console.WriteLine("6 - Consultar Stock");
             Console.Write("\nEscolha a opção: ");
             try
             {
                 opcao = Convert.ToInt32(Console.ReadLine());
-
                 switch (opcao)
                 {
                     case 0:
@@ -62,6 +61,9 @@ namespace PROJETO_FINAL
                     case 4:
                         comprarLivros();
                         break;
+                    case 5:
+                        listagens();
+                        break;
                     default:
                         Console.WriteLine("Opção inválida!");
                         Thread.Sleep(1000);
@@ -76,7 +78,6 @@ namespace PROJETO_FINAL
                 menu();
             }
         }
-
         private void criarLivro()
         {
             
@@ -85,7 +86,6 @@ namespace PROJETO_FINAL
             Thread.Sleep(2000);
             menu();
         }
-
         private void mostrarLivros()
         {
             Console.Clear();
@@ -93,7 +93,6 @@ namespace PROJETO_FINAL
             Thread.Sleep(4000);
             menu();
         }
-
         private void editarLivros()
         {
             Console.Clear();
@@ -101,11 +100,17 @@ namespace PROJETO_FINAL
             Thread.Sleep(2000);
             menu();
         }
-
         private void comprarLivros()
         {
             Console.Clear();
             livraria.comprarLivros();
+            Thread.Sleep(2000);
+            menu();
+        }
+        private void listagens()
+        {
+            Console.Clear();
+            livraria.listagens();
             Thread.Sleep(2000);
             menu();
         }

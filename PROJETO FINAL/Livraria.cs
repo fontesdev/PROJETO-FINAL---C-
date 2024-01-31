@@ -342,19 +342,26 @@ namespace PROJETO_FINAL
             {
                 bool flag = false;
                 double valorSIVA = 0;
+                double totalSIVA = 0;
                 double valorIVA = 0;
+                double totalIVA = 0;
                 double valorCIVA = 0;
+                double totalCIVA = 0;
+                double totalVenda = 0;
+                double quantidadeCompra = 0;
+                int quantidade = 0;
+                int r = 0;
                 if (livros.Count > 0)
                 {
                     while (!flag)
                     {
                         Console.Clear();
+                        
                         Console.WriteLine("* insira 0 para terminar as compras!");
                         Console.Write("Indique o ID ou o ISBN: ");
-                        int r = Convert.ToInt32(Console.ReadLine());
+                        r = Convert.ToInt32(Console.ReadLine());
                         while (r != 0)
-                        {
-                            
+                        { 
                             Console.Clear();
 
                             foreach (var livro in livros)
@@ -368,22 +375,33 @@ namespace PROJETO_FINAL
                                         Console.WriteLine("COMPRAR LIVRO COM O ISBN {0}", r);
 
                                     Console.Write("Indique a quantidade: ");
-                                    int quantidade = Convert.ToInt32(Console.ReadLine());
+                                    quantidade = Convert.ToInt32(Console.ReadLine());
 
                                     valorSIVA = quantidade * livro.Preco;
+                                    totalSIVA = totalSIVA + valorSIVA;
                                     if (livro.TaxaIVA == 23)
                                         valorCIVA = valorSIVA * 1.23;
                                     else
                                         valorCIVA = valorSIVA * 1.06;
+
+                                    totalCIVA = totalCIVA + valorCIVA;
+
                                     valorIVA = valorCIVA - valorSIVA;
+                                    totalIVA = totalIVA + valorIVA;
+
+                                    totalVenda = totalVenda + valorCIVA;
+
                                     livro.Stock = livro.Stock + quantidade;
                                     stockGeral = stockGeral + quantidade;
-                                    valorComprasSIVA = valorComprasSIVA + valorSIVA;
-                                    valorComprasCIVA = valorComprasCIVA + valorCIVA;
+                                    quantidadeCompra = quantidadeCompra + quantidade;
+                                    //valorComprasSIVA = valorComprasSIVA + valorSIVA;
+                                    //valorComprasCIVA = valorComprasCIVA + valorCIVA;
 
                                     Console.Clear();
-                                    Console.WriteLine("Compra realizada!");
-                                    Thread.Sleep(1500);
+                                    Console.WriteLine("Adicionado ao carrinho!");
+                                    Console.WriteLine("RESUMO DO PRODUTO:");
+                                    Console.WriteLine("\nLivro: {0}\nAutor: {1}\nQuantidade: {2}\nPreço s/ IVA: {3}\nPreço final: {4}\nValor do IVA: {5}", livro.Titulo, livro.Autor, quantidade, valorSIVA, valorCIVA, valorIVA);
+                                    Thread.Sleep(2000);
                                     
                                     Console.Clear();
                                     Console.WriteLine("* insira 0 para terminar as compras!");
@@ -400,30 +418,44 @@ namespace PROJETO_FINAL
 
                         }
                         Console.Clear();
+                        int desconto = 0;
                         Console.WriteLine("Compra terminada com sucesso!");
+                        Console.WriteLine("RESUMO DA COMPRA:");
+                        if (totalVenda > 50)
+                        {
+                            totalCIVA = totalCIVA / 0.10;
+                            desconto = 10;
+                        }
+                        Console.WriteLine("\nLivros Comprados: {0}\nTotal da Venda (s/iva): {1}\nDesconto Aplicado: {2}\nTotal da Venda (c/iva): {3}\nValor do IVA: {4}", quantidadeCompra, totalSIVA, desconto, totalCIVA, totalIVA);
+                        Thread.Sleep(2500);
                     }
+
                 }
                 else
                 {
                     Console.WriteLine("Não existem livros criados!");
                 }
             }
-            catch (FormatException)
+            catch (FormatException ex)
             {
-                Console.Clear();
+                Console.WriteLine(ex);
                 Console.WriteLine("Apenas poderá introduzir números!");
                 Thread.Sleep(1000);
-                MostrarLivros();
+                comprarLivros();
             }
             catch
             {
                 Console.Clear();
                 Console.WriteLine("Ocorreu algum problema!");
                 Thread.Sleep(1000);
-                MostrarLivros();
+                comprarLivros();
             }
         }
+        public void listagens()
+        {
+            Console.Clear();
 
+        }
         // Outros métodos relacionados aos livros, como venda, atualização de estoque, etc.
     }
 }
