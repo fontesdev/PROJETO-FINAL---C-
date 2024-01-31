@@ -35,7 +35,7 @@ namespace PROJETO_FINAL
             Console.WriteLine("1 - Criar Livro");//feito
             Console.WriteLine("2 - Consultar Livro");//feito
             Console.WriteLine("3 - Editar Livro");//feito
-            Console.WriteLine("4 - Comprar Livros");
+            Console.WriteLine("4 - Comprar Livros");//feito - falta dar cw como o stor quer!
             Console.WriteLine("5 - Listagens");
             Console.WriteLine("6 - Consultar Stock");
             Console.Write("\nEscolha a opção: ");
@@ -58,6 +58,9 @@ namespace PROJETO_FINAL
                         break;
                     case 3:
                         editarLivros();
+                        break;
+                    case 4:
+                        comprarLivros();
                         break;
                     default:
                         Console.WriteLine("Opção inválida!");
@@ -95,6 +98,14 @@ namespace PROJETO_FINAL
         {
             Console.Clear();
             livraria.editarLivros();
+            Thread.Sleep(2000);
+            menu();
+        }
+
+        private void comprarLivros()
+        {
+            Console.Clear();
+            livraria.comprarLivros();
             Thread.Sleep(2000);
             menu();
         }

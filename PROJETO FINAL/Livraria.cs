@@ -11,6 +11,8 @@ namespace PROJETO_FINAL
         private List<Livro> livros;
         public int stockGeral { get; set; } = 0;
         public int quantLivros { get; set; } = 0;
+        public double valorComprasSIVA { get; set; } = 0;
+        public double valorComprasCIVA { get; set; } = 0;
 
         public Livraria()
         {
@@ -55,12 +57,12 @@ namespace PROJETO_FINAL
             string autor = Console.ReadLine();
             Console.Write("Genero do livro: ");
             string genero = Console.ReadLine();
-            Console.Clear();
-            Console.Write("Preço do livro (s/iva): ");
             while (!flag)
             {
                 try
                 {
+                    Console.Clear();
+                    Console.Write("Preço do livro (s/iva): ");
                     preco = Convert.ToDouble(Console.ReadLine());
                     flag = true;
                 }
@@ -121,7 +123,6 @@ namespace PROJETO_FINAL
                 Console.WriteLine("Ocorreu algum problema!");
             }
         }
-
         public void MostrarLivros()
         {
             try
@@ -176,7 +177,6 @@ namespace PROJETO_FINAL
                 MostrarLivros();
             }
         }
-
         public void editarLivros()
         {
             Console.Clear();
@@ -335,7 +335,94 @@ namespace PROJETO_FINAL
                 MostrarLivros();
             }
         }
-        
+        public void comprarLivros()
+        {
+            Console.Clear();
+            try
+            {
+                bool flag = false;
+                double valorSIVA = 0;
+                double valorIVA = 0;
+                double valorCIVA = 0;
+                if (livros.Count > 0)
+                {
+                    while (!flag)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("* insira 0 para terminar as compras!");
+                        Console.Write("Indique o ID ou o ISBN: ");
+                        int r = Convert.ToInt32(Console.ReadLine());
+                        while (r != 0)
+                        {
+                            
+                            Console.Clear();
+
+                            foreach (var livro in livros)
+                            {
+                                if (livro.Codigo == r || livro.ISBN == r)
+                                {
+                                    flag = true;
+                                    if (livro.Codigo == r)
+                                        Console.WriteLine("COMPRAR LIVRO COM O ID #{0}", r);
+                                    else
+                                        Console.WriteLine("COMPRAR LIVRO COM O ISBN {0}", r);
+
+                                    Console.Write("Indique a quantidade: ");
+                                    int quantidade = Convert.ToInt32(Console.ReadLine());
+
+                                    valorSIVA = quantidade * livro.Preco;
+                                    if (livro.TaxaIVA == 23)
+                                        valorCIVA = valorSIVA * 1.23;
+                                    else
+                                        valorCIVA = valorSIVA * 1.06;
+                                    valorIVA = valorCIVA - valorSIVA;
+                                    livro.Stock = livro.Stock + quantidade;
+                                    stockGeral = stockGeral + quantidade;
+                                    valorComprasSIVA = valorComprasSIVA + valorSIVA;
+                                    valorComprasCIVA = valorComprasCIVA + valorCIVA;
+
+                                    Console.Clear();
+                                    Console.WriteLine("Compra realizada!");
+                                    Thread.Sleep(1500);
+                                    
+                                    Console.Clear();
+                                    Console.WriteLine("* insira 0 para terminar as compras!");
+                                    Console.Write("Indique o ID ou o ISBN: ");
+                                    r = Convert.ToInt32(Console.ReadLine());
+                                }
+                            }
+                            if (!flag)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Não foram encontrados livros com esse ISBN nem com esse ID!");
+                                Thread.Sleep(500);
+                            }
+
+                        }
+                        Console.Clear();
+                        Console.WriteLine("Compra terminada com sucesso!");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Não existem livros criados!");
+                }
+            }
+            catch (FormatException)
+            {
+                Console.Clear();
+                Console.WriteLine("Apenas poderá introduzir números!");
+                Thread.Sleep(1000);
+                MostrarLivros();
+            }
+            catch
+            {
+                Console.Clear();
+                Console.WriteLine("Ocorreu algum problema!");
+                Thread.Sleep(1000);
+                MostrarLivros();
+            }
+        }
 
         // Outros métodos relacionados aos livros, como venda, atualização de estoque, etc.
     }
