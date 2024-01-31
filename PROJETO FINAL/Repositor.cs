@@ -34,7 +34,7 @@ namespace PROJETO_FINAL
             Console.WriteLine("0 - LOGOUT");
             Console.WriteLine("1 - Criar Livro");
             Console.WriteLine("2 - Mostrar Livros");
-            Console.Write("Escolha a opção: ");
+            Console.Write("\nEscolha a opção: ");
             try
             {
                 opcao = Convert.ToInt32(Console.ReadLine());
@@ -72,12 +72,33 @@ namespace PROJETO_FINAL
             livraria.stockGeral++;
             int id = livraria.stockGeral;
 
-            int iva = 0, opcao;
+            int iva = 0, opcao, isbn = 0;
+            double preco = 0;
             bool flag = false;
 
             Console.Clear();
             Console.Write("ISBN do livro: ");
-            int isbn = Convert.ToInt32(Console.ReadLine());
+            while (!flag)
+            {
+                try
+                {
+                    isbn = Convert.ToInt32(Console.ReadLine());
+                    flag = true;
+                }
+                catch (FormatException)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Apenas números!");
+                    Thread.Sleep(500);
+                }
+                catch
+                {
+                    Console.Clear();
+                    Console.WriteLine("Ocorreu algum problema!");
+                    Thread.Sleep(500);
+                }
+            }
+            flag = false;
             Console.Write("Título do livro: ");
             string titulo = Console.ReadLine();
             Console.Write("Autor do livro: ");
@@ -86,28 +107,58 @@ namespace PROJETO_FINAL
             string genero = Console.ReadLine();
             Console.Clear();
             Console.Write("Preço do livro (s/iva): ");
-            double preco = Convert.ToDouble(Console.ReadLine());
+            while (!flag)
+            {
+                try
+                {
+                    preco = Convert.ToDouble(Console.ReadLine());
+                    flag = true;
+                }
+                catch (FormatException)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Apenas números!");
+                    Thread.Sleep(500);
+                }
+                catch
+                {
+                    Console.Clear();
+                    Console.WriteLine("Ocorreu algum problema!");
+                    Thread.Sleep(500);
+                }
+            }
+            flag = false;
             Console.WriteLine("\nValor do IVA:");
             Console.WriteLine("1 - Taxa IVA 23%");
             Console.WriteLine("2 - Taxa IVA 6%");
             Console.Write("\nIndique a opção: ");
             while (!flag)
             {
-                opcao = Convert.ToInt32(Console.ReadLine());
-                switch (opcao)
+                try
                 {
-                    case 1:
-                        iva = 23;
-                        flag = true;
-                        break;
-                    case 2:
-                        iva = 6;
-                        flag = true;
-                        break;
-                    default:
-                        Console.WriteLine("Opção inválida");
-                        break;
+                    opcao = Convert.ToInt32(Console.ReadLine());
+                    switch (opcao)
+                    {
+                        case 1:
+                            iva = 23;
+                            flag = true;
+                            break;
+                        case 2:
+                            iva = 6;
+                            flag = true;
+                            break;
+                        default:
+                            Console.WriteLine("Opção inválida");
+                            break;
+                    }
                 }
+                catch (FormatException)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Apenas números!");
+                    Thread.Sleep(500);
+                }
+                
             }
             Console.Clear();
             livraria.AdicionarLivro(new Livro(id, isbn, titulo, autor, genero, preco, iva, 0));

@@ -31,31 +31,48 @@ namespace PROJETO_FINAL
 
         public void MostrarLivros()
         {
-            bool flag = false;
-            if (livros.Count > 0)
+            try
             {
-                Console.Write("Indique o ID ou o ISBN: ");
-                int r = Convert.ToInt32(Console.ReadLine());
-                Console.Clear();
-                
-                foreach (var livro in livros)
+                bool flag = false;
+                if (livros.Count > 0)
                 {
-                    if(livro.Codigo == r || livro.ISBN == r)
+                    Console.Write("Indique o ID ou o ISBN: ");
+                    int r = Convert.ToInt32(Console.ReadLine());
+                    Console.Clear();
+
+                    foreach (var livro in livros)
                     {
-                        if (livro.Codigo == r)
-                            Console.WriteLine("LIVRO COM O ID #{0}", r);
-                        else
-                            Console.WriteLine("LIVRO COM O ISBN {0}", r);
-                        Console.WriteLine($"\nID: {livro.Codigo}\nISBN: {livro.ISBN}\nTítulo: {livro.Titulo}\nAutor: {livro.Autor}\nStock: {livro.Stock}");
-                        flag = true;
+                        if (livro.Codigo == r || livro.ISBN == r)
+                        {
+                            if (livro.Codigo == r)
+                                Console.WriteLine("LIVRO COM O ID #{0}", r);
+                            else
+                                Console.WriteLine("LIVRO COM O ISBN {0}", r);
+                            Console.WriteLine($"\nID: {livro.Codigo}\nISBN: {livro.ISBN}\nTítulo: {livro.Titulo}\nAutor: {livro.Autor}\nStock: {livro.Stock}");
+                            flag = true;
+                        }
                     }
+                    if (!flag)
+                        Console.WriteLine("Não foram encontrados livros com esse ISBN nem com esse ID!");
                 }
-                if(!flag)
-                    Console.WriteLine("Não foram encontrados livros com esse ISBN nem com esse ID!");
+                else
+                {
+                    Console.WriteLine("Não existem livros criados!");
+                }
             }
-            else
+            catch(FormatException)
             {
-                Console.WriteLine("Não existem livros criados!");
+                Console.Clear();
+                Console.WriteLine("Apenas poderá introduzir números!");
+                Thread.Sleep(1000);
+                MostrarLivros();
+            }
+            catch
+            {
+                Console.Clear();
+                Console.WriteLine("Ocorreu algum problema!");
+                Thread.Sleep(1000);
+                MostrarLivros();
             }
         }
 
