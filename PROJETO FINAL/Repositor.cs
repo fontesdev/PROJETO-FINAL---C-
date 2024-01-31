@@ -31,9 +31,13 @@ namespace PROJETO_FINAL
             Console.Clear();
             Console.WriteLine("[REPOSIÇÃO] - Bem vindo, {0}! Hoje é o dia {1} de {2} de {3}", nome, DateTime.Now.Day, DateTime.Now.ToString("MMMM"), DateTime.Now.Year);
             Console.WriteLine("MENU\n");
-            Console.WriteLine("0 - LOGOUT");
-            Console.WriteLine("1 - Criar Livro");
-            Console.WriteLine("2 - Mostrar Livros");
+            Console.WriteLine("0 - LOGOUT");//feito
+            Console.WriteLine("1 - Criar Livro");//feito
+            Console.WriteLine("2 - Consultar Livro");//feito
+            Console.WriteLine("3 - Editar Livro");
+            Console.WriteLine("4 - Comprar Livros");
+            Console.WriteLine("5 - Listagens");
+            Console.WriteLine("6 - Consultar Stock");
             Console.Write("\nEscolha a opção: ");
             try
             {
@@ -161,7 +165,7 @@ namespace PROJETO_FINAL
                 
             }
             Console.Clear();
-            livraria.AdicionarLivro(new Livro(id, isbn, titulo, autor, genero, preco, iva, 0));
+            livraria.CriarLivro(new Livro(id, isbn, titulo, autor, genero, preco, iva, 0));
             Thread.Sleep(2000);
             menu();
         }

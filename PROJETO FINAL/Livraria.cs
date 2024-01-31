@@ -16,7 +16,7 @@ namespace PROJETO_FINAL
             livros = new List<Livro>();
         }
 
-        public void AdicionarLivro(Livro livro)
+        public void CriarLivro(Livro livro)
         {
             try
             {

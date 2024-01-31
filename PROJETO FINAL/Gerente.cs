@@ -26,12 +26,12 @@ namespace PROJETO_FINAL
             Console.Clear();
             Console.WriteLine("[BACKOFFICE] - Bem vindo, {0}! Hoje é o dia {1} de {2} de {3}", nome, DateTime.Now.Day, DateTime.Now.ToString("MMMM"), DateTime.Now.Year);
             Console.WriteLine("MENU\n");
-            Console.WriteLine("0 - LOGOUT");
+            Console.WriteLine("0 - LOGOUT");//feito
             Console.WriteLine("1 - Criar Funcionário");//feito
             Console.WriteLine("2 - Listar Funcionários");//feito
             Console.WriteLine("3 - Eliminar Funcionário");//feito
             Console.WriteLine("4 - Vender Livro");
-            Console.WriteLine("5 - Consultar Livro");
+            Console.WriteLine("5 - Consultar Livro");//feito
             Console.WriteLine("6 - Listagens");
             Console.WriteLine("7 - Consultar Stock");
             Console.WriteLine("8 - Total de Livros Vendidos e Receita Total");
@@ -55,6 +55,9 @@ namespace PROJETO_FINAL
                         break;
                     case 3:
                         eliminarFuncionarios();
+                        break;
+                    case 5:
+                        mostrarLivros();
                         break;
                     default:
                         Console.WriteLine("Opção inválida!");
@@ -173,6 +176,14 @@ namespace PROJETO_FINAL
                 Thread.Sleep(2000);
                 eliminarFuncionarios();
             }
+        }
+
+        private void mostrarLivros()
+        {
+            Console.Clear();
+            livraria.MostrarLivros();
+            Thread.Sleep(4000);
+            menu();
         }
     }
 }
