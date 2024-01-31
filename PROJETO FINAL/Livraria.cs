@@ -180,7 +180,160 @@ namespace PROJETO_FINAL
         public void editarLivros()
         {
             Console.Clear();
-            Console.WriteLine("editar");
+            try
+            {
+                bool flag = false;
+                int opcao;
+                if (livros.Count > 0)
+                {
+                    while (!flag)
+                    {
+                        Console.Clear();
+                        Console.Write("Indique o ID ou o ISBN: ");
+                        int r = Convert.ToInt32(Console.ReadLine());
+                        Console.Clear();
+
+                        foreach (var livro in livros)
+                        {
+                            if (livro.Codigo == r || livro.ISBN == r)
+                            {
+                                flag = true;
+                                if (livro.Codigo == r)
+                                    Console.WriteLine("EDITAR LIVRO COM O ID #{0}\n", r);
+                                else
+                                    Console.WriteLine("EDITAR LIVRO COM O ISBN {0}\n", r);
+                                Console.WriteLine("1 - ISBN");
+                                Console.WriteLine("2 - Título");
+                                Console.WriteLine("3 - Autor");
+                                Console.WriteLine("4 - Genero");
+                                Console.WriteLine("5 - Preço");
+                                Console.WriteLine("6 - Taxa IVA");
+                                Console.Write("\nEscolha a opção: ");
+                                bool flag3 = false;
+                                while (!flag3)
+                                {
+                                    try
+                                    {
+                                        opcao = Convert.ToInt32(Console.ReadLine());
+                                        switch (opcao)
+                                        {
+                                            case 1:
+                                                flag3 = true;
+                                                Console.Clear();
+                                                Console.Write("Indique o novo ISBN: ");
+                                                int novoISBN = Convert.ToInt32(Console.ReadLine());
+                                                livro.ISBN = novoISBN;
+                                                break;
+                                            case 2:
+                                                flag3 = true;
+                                                Console.Clear();
+                                                Console.Write("Indique o novo Título: ");
+                                                string novoTitulo = Console.ReadLine();
+                                                livro.Titulo = novoTitulo;
+                                                break;
+                                            case 3:
+                                                flag3 = true;
+                                                Console.Clear();
+                                                Console.Write("Indique o novo Autor: ");
+                                                string novoAutor = Console.ReadLine();
+                                                livro.Autor = novoAutor;
+                                                break;
+                                            case 4:
+                                                flag3 = true;
+                                                Console.Clear();
+                                                Console.Write("Indique o novo Genero: ");
+                                                string novoGenero = Console.ReadLine();
+                                                livro.Genero = novoGenero;
+                                                break;
+                                            case 5:
+                                                flag3 = true;
+                                                Console.Clear();
+                                                Console.Write("Indique o novo Preco: ");
+                                                double novoPreco = Convert.ToDouble(Console.ReadLine());
+                                                livro.Preco = novoPreco;
+                                                break;
+                                            case 6:
+                                                flag3 = true;
+                                                bool flag2 = false;
+                                                Console.Clear();
+                                                int novoIVA = 0;
+                                                Console.WriteLine("Indique o novo IVA:");
+                                                Console.WriteLine("1 - Taxa IVA 23%");
+                                                Console.WriteLine("2 - Taxa IVA 6%");
+                                                Console.Write("\nIndique a opção: ");
+                                                while (!flag2)
+                                                {
+                                                    try
+                                                    {
+                                                        opcao = Convert.ToInt32(Console.ReadLine());
+                                                        switch (opcao)
+                                                        {
+                                                            case 1:
+                                                                novoIVA = 23;
+                                                                flag2 = true;
+                                                                break;
+                                                            case 2:
+                                                                novoIVA = 6;
+                                                                flag2 = true;
+                                                                break;
+                                                            default:
+                                                                Console.WriteLine("Opção inválida");
+                                                                break;
+                                                        }
+                                                    }
+                                                    catch (FormatException)
+                                                    {
+                                                        Console.Clear();
+                                                        Console.WriteLine("Apenas números!");
+                                                        Thread.Sleep(500);
+                                                    }
+
+                                                }
+                                                livro.TaxaIVA = novoIVA;
+                                                break;
+                                            default:
+                                                Console.WriteLine("Opção inválida");
+                                                break;
+                                        }
+                                    }
+                                    catch (FormatException)
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("Apenas números!");
+                                        Thread.Sleep(500);
+                                    }
+                                }
+                                Console.Clear();
+                                Console.WriteLine("Livro editado com sucesso!");
+                            }
+                        }
+                        if (!flag)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Não foram encontrados livros com esse ISBN nem com esse ID!");
+                            Thread.Sleep(500);
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Não existem livros criados!");
+                }
+            }
+            catch (FormatException)
+            {
+                Console.Clear();
+                Console.WriteLine("Apenas poderá introduzir números!");
+                Thread.Sleep(1000);
+                MostrarLivros();
+            }
+            catch
+            {
+                Console.Clear();
+                Console.WriteLine("Ocorreu algum problema!");
+                Thread.Sleep(1000);
+                MostrarLivros();
+            }
         }
         
 

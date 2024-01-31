@@ -34,7 +34,7 @@ namespace PROJETO_FINAL
             Console.WriteLine("0 - LOGOUT");//feito
             Console.WriteLine("1 - Criar Livro");//feito
             Console.WriteLine("2 - Consultar Livro");//feito
-            Console.WriteLine("3 - Editar Livro");//a fazer
+            Console.WriteLine("3 - Editar Livro");//feito
             Console.WriteLine("4 - Comprar Livros");
             Console.WriteLine("5 - Listagens");
             Console.WriteLine("6 - Consultar Stock");
