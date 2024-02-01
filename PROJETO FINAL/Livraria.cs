@@ -11,8 +11,8 @@ namespace PROJETO_FINAL
         private List<Livro> livros;
         public int stockGeral { get; set; } = 0;
         public int quantLivros { get; set; } = 0;
-        public double valorComprasSIVA { get; set; } = 0;
-        public double valorComprasCIVA { get; set; } = 0;
+        public int livrosVendidos { get; set; } = 0;
+        public double receitaGeral { get; set; } = 0;
 
         public Livraria()
         {
@@ -413,8 +413,6 @@ namespace PROJETO_FINAL
                                     livro.Stock = livro.Stock + quantidade;
                                     stockGeral = stockGeral + quantidade;
                                     quantidadeCompra = quantidadeCompra + quantidade;
-                                    //valorComprasSIVA = valorComprasSIVA + valorSIVA;
-                                    //valorComprasCIVA = valorComprasCIVA + valorCIVA;
 
                                     Console.Clear();
                                     Console.WriteLine("Adicionado ao carrinho!");
@@ -638,6 +636,110 @@ namespace PROJETO_FINAL
                 Console.Clear();
                 Console.WriteLine("Não existe nenhum stock disponível!");
             }
+        }
+        public void venderLivros()
+        {
+            Console.Clear();
+            try
+            {
+                bool flag = false;
+                bool flag2 = false;
+                bool flag3 = false;
+                if (livros.Count > 0)
+                {
+                    while (!flag)
+                    {
+                        Console.Clear();
+                        Console.Write("Indique o ID ou o ISBN: ");
+                        int r = Convert.ToInt32(Console.ReadLine());
+                        Console.Clear();
+
+                        foreach (var livro in livros)
+                        {
+                            if (livro.Codigo == r || livro.ISBN == r)
+                            {
+                                flag = true;
+                                Console.Clear();
+                                while (!flag2)
+                                {
+                                    Console.Clear();
+                                    Console.Write("Quantidade: ");
+                                    int quantidade = Convert.ToInt32(Console.ReadLine());
+                                    if (livro.Stock < quantidade)
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("Não existe stock suficiente!");
+                                        Thread.Sleep(500);
+                                    }
+                                    else
+                                    {
+                                        flag2 = true;
+                                        double iva;
+                                        while (!flag3)
+                                        {
+                                            Console.Clear();
+                                            Console.Write("Preço de Venda (c/iva): ");
+                                            double pv = Convert.ToDouble(Console.ReadLine());
+                                            if (livro.TaxaIVA == 23)
+                                                iva = 1.23;
+                                            else
+                                                iva = 1.06;
+                                            if (pv <= (livro.Preco * iva))
+                                            {
+                                                Console.Clear();
+                                                Console.WriteLine("Não podes vender mais barato do que o que compras!");
+                                                Thread.Sleep(500);
+                                            }
+                                            else
+                                            {
+                                                flag3 = true;
+                                                livro.Stock = livro.Stock - quantidade;
+                                                stockGeral = stockGeral - quantidade;
+                                                livrosVendidos = livrosVendidos + quantidade;
+                                                receitaGeral = receitaGeral + pv;
+                                                Console.Clear();
+                                                Console.WriteLine("Livro(s) vendido(s) com sucesso!");
+                                                Thread.Sleep(500);
+                                            }
+                                        }
+                                    }
+                                }    
+                            }
+                        }
+                        if (!flag)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Não foram encontrados livros com esse ISBN nem com esse ID!");
+                            Thread.Sleep(500);
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Não existem livros criados!");
+                }
+            }
+            catch (FormatException)
+            {
+                Console.Clear();
+                Console.WriteLine("Apenas poderá introduzir números!");
+                Thread.Sleep(1000);
+                venderLivros();
+            }
+            catch
+            {
+                Console.Clear();
+                Console.WriteLine("Ocorreu algum problema!");
+                Thread.Sleep(1000);
+                venderLivros();
+            }
+
+        }
+        public void totalReceitaeLivros()
+        {
+            Console.Clear();
+            Console.WriteLine("TOTAIS\n");
+            Console.WriteLine("Livros Vendidos: {0}\tReceita Geral: {1}", livrosVendidos, receitaGeral);
         }
         // Outros métodos relacionados aos livros, como venda, atualização de estoque, etc.
     }

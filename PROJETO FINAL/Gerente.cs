@@ -30,11 +30,11 @@ namespace PROJETO_FINAL
             Console.WriteLine("1 - Criar Funcionário");//feito
             Console.WriteLine("2 - Listar Funcionários");//feito
             Console.WriteLine("3 - Eliminar Funcionário");//feito
-            Console.WriteLine("4 - Vender Livro");
+            Console.WriteLine("4 - Vender Livro");//feito
             Console.WriteLine("5 - Consultar Livro");//feito
             Console.WriteLine("6 - Listagens");//feito
             Console.WriteLine("7 - Consultar Stock");//feito
-            Console.WriteLine("8 - Total de Livros Vendidos e Receita Total");
+            Console.WriteLine("8 - Total de Livros Vendidos e Receita Total");//feito
             Console.Write("\nEscolha a opção: ");
             try
             {
@@ -56,6 +56,9 @@ namespace PROJETO_FINAL
                     case 3:
                         eliminarFuncionarios();
                         break;
+                    case 4:
+                        venderLivros();
+                        break;
                     case 5:
                         mostrarLivros();
                         break;
@@ -65,6 +68,8 @@ namespace PROJETO_FINAL
                     case 7:
                         consultarStocks();
                         break;
+                    case 8:
+                        totalReceitaeLivros();
                     default:
                         Console.WriteLine("Opção inválida!");
                         Thread.Sleep(1000);
@@ -204,6 +209,22 @@ namespace PROJETO_FINAL
         {
             Console.Clear();
             livraria.consultarStocks();
+            Thread.Sleep(2000);
+            menu();
+        }
+
+        private void venderLivros()
+        {
+            Console.Clear();
+            livraria.venderLivros();
+            Thread.Sleep(2000);
+            menu();
+        }
+
+        private void totalReceitaeLivros()
+        {
+            Console.Clear();
+            livraria.totalReceitaeLivros();
             Thread.Sleep(2000);
             menu();
         }
