@@ -30,7 +30,7 @@ namespace PROJETO_FINAL
             Console.WriteLine("1 - Criar Funcionário");//feito
             Console.WriteLine("2 - Listar Funcionários");//feito
             Console.WriteLine("3 - Eliminar Funcionário");//feito
-            Console.WriteLine("4 - Vender Livro");//feito
+            Console.WriteLine("4 - Vender Livros");//feito
             Console.WriteLine("5 - Consultar Livro");//feito
             Console.WriteLine("6 - Listagens");//feito
             Console.WriteLine("7 - Consultar Stock");//feito
@@ -70,6 +70,7 @@ namespace PROJETO_FINAL
                         break;
                     case 8:
                         totalReceitaeLivros();
+                        break;
                     default:
                         Console.WriteLine("Opção inválida!");
                         Thread.Sleep(1000);
@@ -119,7 +120,7 @@ namespace PROJETO_FINAL
                 switch (opcao)
                 {
                     case 1:
-                        func = new Caixa(utilizador, password, nome);
+                        func = new Caixa(utilizador, password, nome, funcionarios, livraria);
                         break;
                     case 2:
                         func = new Repositor(utilizador, password, nome, funcionarios, livraria);

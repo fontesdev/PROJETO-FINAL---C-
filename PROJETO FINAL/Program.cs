@@ -56,10 +56,32 @@ internal class Program
                     }
                     break;
                 case 2:
-                    Console.WriteLine("Caixa");
+                    Type tipo2 = typeof(Caixa);
+                    while (!flag)
+                    {
+                        Console.Clear();
+                        Console.Write("Utilizador: ");
+                        utilizador = Console.ReadLine();
+                        Console.Write("Password: ");
+                        password = Console.ReadLine();
+                        if (Caixa.ValidarLogin(utilizador, password, tipo2))
+                        {
+                            Console.Clear();
+                            Funcionario caixaEncontrado = funcionarios.Find(f => f.utilizador == utilizador && f.password == password && f.GetType() == tipo2);
+
+                            Caixa caixa = new Caixa(caixaEncontrado.password, caixaEncontrado.utilizador, caixaEncontrado.nome, funcionarios, livraria);
+                            flag = true;
+                            caixa.menu();
+                            menu();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Dados incorretos - Tente novamente!");
+                            Thread.Sleep(2000);
+                        }
+                    }
                     break;
                 case 3:
-
                     Type tipo = typeof(Repositor);
                     while (!flag)
                     {
