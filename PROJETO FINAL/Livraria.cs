@@ -24,18 +24,37 @@ namespace PROJETO_FINAL
             quantLivros++;
             int id = quantLivros;
 
-            int iva = 0, opcao, isbn = 0;
+            int iva = 0, opcao;
+            long isbn = 0;
             double preco = 0;
             bool flag = false;
-
-            Console.Clear();
-            Console.Write("ISBN do livro: ");
             while (!flag)
             {
                 try
                 {
-                    isbn = Convert.ToInt32(Console.ReadLine());
-                    flag = true;
+                    Console.Clear();
+                    Console.Write("ISBN do livro: ");
+                    isbn = Convert.ToInt64(Console.ReadLine());
+                    Livro existeISBN = livros.Find(l => l.ISBN == isbn);
+                    if(existeISBN != null)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("ISBN já existente!");
+                        Thread.Sleep(500);
+                    }
+                    else
+                    {
+                        if(isbn.ToString().Length != 13)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("O ISBN tem que ter 13 números!");
+                            Thread.Sleep(500);
+                        }
+                        else
+                        {
+                            flag = true;
+                        }
+                    }
                 }
                 catch (FormatException)
                 {
@@ -43,7 +62,7 @@ namespace PROJETO_FINAL
                     Console.WriteLine("Apenas números!");
                     Thread.Sleep(500);
                 }
-                catch
+                catch (Exception e)
                 {
                     Console.Clear();
                     Console.WriteLine("Ocorreu algum problema!");
@@ -72,8 +91,10 @@ namespace PROJETO_FINAL
                     Console.WriteLine("Apenas números!");
                     Thread.Sleep(500);
                 }
-                catch
+                catch(Exception e)
                 {
+                    Console.WriteLine(e);
+                    Thread.Sleep(5000);
                     Console.Clear();
                     Console.WriteLine("Ocorreu algum problema!");
                     Thread.Sleep(500);
@@ -118,8 +139,10 @@ namespace PROJETO_FINAL
                 livros.Add(new Livro(id, isbn, titulo, autor, genero, preco, iva, 0));
                 Console.WriteLine("Livro '{0}' adicionado com sucesso!", titulo);
             }
-            catch
+            catch(Exception e)
             {
+                Console.WriteLine(e);
+                Thread.Sleep(5000);
                 Console.WriteLine("Ocorreu algum problema!");
             }
         }
@@ -134,7 +157,7 @@ namespace PROJETO_FINAL
                     {
                         Console.Clear();
                         Console.Write("Indique o ID ou o ISBN: ");
-                        int r = Convert.ToInt32(Console.ReadLine());
+                        long r = Convert.ToInt64(Console.ReadLine());
                         Console.Clear();
 
                         foreach (var livro in livros)
@@ -190,7 +213,7 @@ namespace PROJETO_FINAL
                     {
                         Console.Clear();
                         Console.Write("Indique o ID ou o ISBN: ");
-                        int r = Convert.ToInt32(Console.ReadLine());
+                        long r = Convert.ToInt64(Console.ReadLine());
                         Console.Clear();
 
                         foreach (var livro in livros)
@@ -220,10 +243,43 @@ namespace PROJETO_FINAL
                                         {
                                             case 1:
                                                 flag3 = true;
-                                                Console.Clear();
-                                                Console.Write("Indique o novo ISBN: ");
-                                                int novoISBN = Convert.ToInt32(Console.ReadLine());
-                                                livro.ISBN = novoISBN;
+                                                bool flag4 = false;
+                                                while (!flag4)
+                                                {
+                                                    Console.Clear();
+                                                    Console.Write("Indique o novo ISBN: ");
+                                                    long novoISBN = Convert.ToInt64(Console.ReadLine());
+                                                    Livro existeISBN = livros.Find(l => l.ISBN == novoISBN);
+                                                    if (existeISBN != null)
+                                                    {
+                                                        Console.Clear();
+                                                        Console.WriteLine("ISBN já existente!");
+                                                        Thread.Sleep(500);
+                                                    }
+                                                    else
+                                                    {
+                                                        if (novoISBN.ToString().Length != 13)
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("O ISBN tem que ter 13 números!");
+                                                            Thread.Sleep(500);
+                                                        }
+                                                        else
+                                                        {
+                                                            if(novoISBN == livro.ISBN)
+                                                            {
+                                                                Console.Clear();
+                                                                Console.WriteLine("Não é possível editar para o mesmo ISBN!");
+                                                                Thread.Sleep(500);
+                                                            }
+                                                            else
+                                                            {
+                                                                flag4 = true;
+                                                                livro.ISBN = novoISBN;
+                                                            }
+                                                        }
+                                                    }
+                                                }                                             
                                                 break;
                                             case 2:
                                                 flag3 = true;
@@ -369,7 +425,7 @@ namespace PROJETO_FINAL
                 double totalVenda = 0;
                 double quantidadeCompra = 0;
                 int quantidade = 0;
-                int r = 0;
+                long r = 0;
                 if (livros.Count > 0)
                 {
                     while (!flag)
@@ -378,7 +434,7 @@ namespace PROJETO_FINAL
                         
                         Console.WriteLine("* insira 0 para terminar as compras!");
                         Console.Write("Indique o ID ou o ISBN: ");
-                        r = Convert.ToInt32(Console.ReadLine());
+                        r = Convert.ToInt64(Console.ReadLine());
                         while (r != 0)
                         { 
                             Console.Clear();
@@ -423,7 +479,7 @@ namespace PROJETO_FINAL
                                     Console.Clear();
                                     Console.WriteLine("* insira 0 para terminar as compras!");
                                     Console.Write("Indique o ID ou o ISBN: ");
-                                    r = Convert.ToInt32(Console.ReadLine());
+                                    r = Convert.ToInt64(Console.ReadLine());
                                 }
                             }
                             if (!flag)
@@ -590,7 +646,7 @@ namespace PROJETO_FINAL
                                 flag = true;
                                 Console.Clear();
                                 Console.Write("Indique o ID ou o ISBN: ");
-                                int r = Convert.ToInt32(Console.ReadLine());
+                                long r = Convert.ToInt64(Console.ReadLine());
                                 Console.Clear();
 
                                 foreach (var livro in livros)
@@ -651,7 +707,7 @@ namespace PROJETO_FINAL
                     {
                         Console.Clear();
                         Console.Write("Indique o ID ou o ISBN: ");
-                        int r = Convert.ToInt32(Console.ReadLine());
+                        long r = Convert.ToInt64(Console.ReadLine());
                         Console.Clear();
 
                         foreach (var livro in livros)

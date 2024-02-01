@@ -6,7 +6,7 @@ internal class Program
 {
     static List<Funcionario> funcionarios = new List<Funcionario>();
     static Livraria livraria = new Livraria();
-    static Gerente gerente = new Gerente("gerente99", "gerente99","João",funcionarios, livraria);
+    static Gerente gerente = new Gerente("gerente99", "gerente99","João", funcionarios, livraria);
     private static void Main(string[] args)
     {
         menu();
@@ -28,17 +28,22 @@ internal class Program
         try
         {
             opcao = Convert.ToInt32(Console.ReadLine());
-
             switch (opcao)
             {
                 case 0:
+                    Console.Clear();
+                    Console.WriteLine("A fechar...");
+                    Thread.Sleep(1000);
+                    Environment.Exit(0);
                     break;
                 case 1:
                     while (!flag)
                     {
                         Console.Clear();
+                        Console.WriteLine("0 - VOLTAR");
                         Console.Write("Utilizador: ");
                         utilizador = Console.ReadLine();
+                        if (utilizador == "0") menu();
                         Console.Write("Password: ");
                         password = Console.ReadLine();
                         if (gerente.ValidarLogin(utilizador, password))
@@ -50,74 +55,103 @@ internal class Program
                         }
                         else
                         {
+                            Console.Clear();
                             Console.WriteLine("Dados incorretos - Tente novamente!");
-                            Thread.Sleep(2000);
+                            Thread.Sleep(1500);
                         }
                     }
                     break;
                 case 2:
-                    Type tipo2 = typeof(Caixa);
-                    while (!flag)
+                    if (funcionarios.Count == 0)
                     {
                         Console.Clear();
-                        Console.Write("Utilizador: ");
-                        utilizador = Console.ReadLine();
-                        Console.Write("Password: ");
-                        password = Console.ReadLine();
-                        if (Caixa.ValidarLogin(utilizador, password, tipo2))
+                        Console.WriteLine("Não existem funcionários criados!");
+                        Thread.Sleep(1000);
+                        menu();
+                    }
+                    else
+                    {
+                        Type tipo2 = typeof(Caixa);
+                        while (!flag)
                         {
                             Console.Clear();
-                            Funcionario caixaEncontrado = funcionarios.Find(f => f.utilizador == utilizador && f.password == password && f.GetType() == tipo2);
+                            Console.WriteLine("0 - VOLTAR");
+                            Console.Write("Utilizador: ");
+                            utilizador = Console.ReadLine();
+                            if (utilizador == "0") menu();
+                            Console.Write("Password: ");
+                            password = Console.ReadLine();
+                            if (Caixa.ValidarLogin(utilizador, password, tipo2))
+                            {
+                                Console.Clear();
+                                Funcionario caixaEncontrado = funcionarios.Find(f => f.utilizador == utilizador && f.password == password && f.GetType() == tipo2);
 
-                            Caixa caixa = new Caixa(caixaEncontrado.password, caixaEncontrado.utilizador, caixaEncontrado.nome, funcionarios, livraria);
-                            flag = true;
-                            caixa.menu();
-                            menu();
-                        }
-                        else
-                        {
-                            Console.WriteLine("Dados incorretos - Tente novamente!");
-                            Thread.Sleep(2000);
+                                Caixa caixa = new Caixa(caixaEncontrado.password, caixaEncontrado.utilizador, caixaEncontrado.nome, funcionarios, livraria);
+                                flag = true;
+                                caixa.menu();
+                                menu();
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Dados incorretos - Tente novamente!");
+                                Thread.Sleep(1500);
+                            }
                         }
                     }
                     break;
                 case 3:
-                    Type tipo = typeof(Repositor);
-                    while (!flag)
+                    if (funcionarios.Count == 0)
                     {
                         Console.Clear();
-                        Console.Write("Utilizador: ");
-                        utilizador = Console.ReadLine();
-                        Console.Write("Password: ");
-                        password = Console.ReadLine();
-                        if (Repositor.ValidarLogin(utilizador, password, tipo))
+                        Console.WriteLine("Não existem funcionários criados!");
+                        Thread.Sleep(1000);
+                        menu();
+                    }
+                    else
+                    {
+                        Type tipo = typeof(Repositor);
+                        while (!flag)
                         {
                             Console.Clear();
-                            Funcionario repositorEncontrado = funcionarios.Find(f => f.utilizador == utilizador && f.password == password && f.GetType() == tipo);
+                            Console.WriteLine("0 - VOLTAR");
+                            Console.Write("Utilizador: ");
+                            utilizador = Console.ReadLine();
+                            if (utilizador == "0") menu();
+                            Console.Write("Password: ");
+                            password = Console.ReadLine();
+                            if (Repositor.ValidarLogin(utilizador, password, tipo))
+                            {
+                                Console.Clear();
+                                Funcionario repositorEncontrado = funcionarios.Find(f => f.utilizador == utilizador && f.password == password && f.GetType() == tipo);
 
-                            Repositor repositor = new Repositor(repositorEncontrado.password, repositorEncontrado.utilizador, repositorEncontrado.nome, funcionarios, livraria);
-                            flag = true;
-                            repositor.menu();
-                            menu();
+                                Repositor repositor = new Repositor(repositorEncontrado.password, repositorEncontrado.utilizador, repositorEncontrado.nome, funcionarios, livraria);
+                                flag = true;
+                                repositor.menu();
+                                menu();
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Dados incorretos - Tente novamente!");
+                                Thread.Sleep(1500);
+                            }
                         }
-                        else
-                        {
-                            Console.WriteLine("Dados incorretos - Tente novamente!");
-                            Thread.Sleep(2000);
-                        }
-                    }
+                    } 
                     break;
                 default:
-                    Console.WriteLine("Opção inválida!");
-                    Thread.Sleep(2000);
+                    Console.Clear();
+                    Console.Write("Opção inválida!");
+                    Thread.Sleep(1000);
                     menu();
                     break;
             }
         }
         catch (FormatException)
         {
+            Console.Clear();
             Console.WriteLine("\nApenas podem ser introduzidos números!");
-            Thread.Sleep(2000);
+            Thread.Sleep(1500);
             menu();
         }
     }

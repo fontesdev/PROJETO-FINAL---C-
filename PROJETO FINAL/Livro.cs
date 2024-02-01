@@ -13,14 +13,14 @@ namespace PROJETO_FINAL
         public int Codigo { get; set; }
         public string Titulo { get; set; }
         public string Autor { get; set; }
-        public int ISBN { get; set; }
+        public long ISBN { get; set; }
         public string Genero { get; set; }
         public double Preco {  get; set; }
         public int TaxaIVA { get; set; }
 
         public int Stock { get; set; }
 
-        public Livro(int codigo, int isbn, string titulo, string autor, string genero, double preco, int taxaIVA, int stock)
+        public Livro(int codigo, long isbn, string titulo, string autor, string genero, double preco, int taxaIVA, int stock)
         {
             Codigo = codigo;
             ISBN = isbn;
