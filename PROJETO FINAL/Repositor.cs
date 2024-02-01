@@ -36,8 +36,8 @@ namespace PROJETO_FINAL
             Console.WriteLine("2 - Consultar Livro");//feito
             Console.WriteLine("3 - Editar Livro");//feito
             Console.WriteLine("4 - Comprar Livros");//feito
-            Console.WriteLine("5 - Listagens");
-            Console.WriteLine("6 - Consultar Stock");
+            Console.WriteLine("5 - Listagens");//feito
+            Console.WriteLine("6 - Consultar Stock");//feito
             Console.Write("\nEscolha a opção: ");
             try
             {
@@ -64,6 +64,9 @@ namespace PROJETO_FINAL
                     case 5:
                         listagens();
                         break;
+                    case 6:
+                        consultarStocks();
+                        break;
                     default:
                         Console.WriteLine("Opção inválida!");
                         Thread.Sleep(1000);
@@ -73,6 +76,7 @@ namespace PROJETO_FINAL
             }
             catch (FormatException)
             {
+                Console.Clear();
                 Console.WriteLine("\nApenas podem ser introduzidos números!");
                 Thread.Sleep(2000);
                 menu();
@@ -111,6 +115,13 @@ namespace PROJETO_FINAL
         {
             Console.Clear();
             livraria.listagens();
+            Thread.Sleep(2000);
+            menu();
+        }
+        private void consultarStocks()
+        {
+            Console.Clear();
+            livraria.consultarStocks();
             Thread.Sleep(2000);
             menu();
         }

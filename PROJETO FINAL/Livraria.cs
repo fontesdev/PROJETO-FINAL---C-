@@ -83,7 +83,7 @@ namespace PROJETO_FINAL
             Console.WriteLine("\nValor do IVA:");
             Console.WriteLine("1 - Taxa IVA 23%");
             Console.WriteLine("2 - Taxa IVA 6%");
-            Console.Write("\nIndique a opção: ");
+            Console.Write("\nEscolha a opção: ");
             while (!flag)
             {
                 try
@@ -208,6 +208,7 @@ namespace PROJETO_FINAL
                                 Console.WriteLine("4 - Genero");
                                 Console.WriteLine("5 - Preço");
                                 Console.WriteLine("6 - Taxa IVA");
+                                Console.WriteLine("7 - Stock");
                                 Console.Write("\nEscolha a opção: ");
                                 bool flag3 = false;
                                 while (!flag3)
@@ -290,6 +291,24 @@ namespace PROJETO_FINAL
 
                                                 }
                                                 livro.TaxaIVA = novoIVA;
+                                                break;
+                                            case 7:
+                                                flag3 = true;
+                                                Console.Clear();
+                                                Console.Write("Indique o novo Stock: ");
+                                                int novoStock = Convert.ToInt32(Console.ReadLine());
+                                                if(stockGeral != 0)
+                                                {
+                                                    stockGeral = stockGeral - livro.Stock;
+                                                    livro.Stock = novoStock;
+                                                    stockGeral = stockGeral + livro.Stock;
+                                                }
+                                                else
+                                                {
+                                                    livro.Stock = novoStock;
+                                                    stockGeral = stockGeral + livro.Stock;
+                                                }
+                                                
                                                 break;
                                             default:
                                                 Console.WriteLine("Opção inválida");
@@ -436,9 +455,9 @@ namespace PROJETO_FINAL
                     Console.WriteLine("Não existem livros criados!");
                 }
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
-                Console.WriteLine(ex);
+                Console.Clear();
                 Console.WriteLine("Apenas poderá introduzir números!");
                 Thread.Sleep(1000);
                 comprarLivros();
@@ -454,7 +473,171 @@ namespace PROJETO_FINAL
         public void listagens()
         {
             Console.Clear();
+            bool flag = false;
+            int opcao;
+            if(livros.Count > 0)
+            {
+                Console.WriteLine("LISTAGENS");
+                Console.WriteLine("\n0 - VOLTAR");
+                Console.WriteLine("1 - Listar por GENERO");
+                Console.WriteLine("2 - Listar por AUTOR");
+                Console.WriteLine("3 - Listar TODOS");
+                Console.WriteLine("\nEscolha a opção: ");
+                while (!flag)
+                {
+                    try
+                    {
+                        opcao = Convert.ToInt32(Console.ReadLine());
+                        switch (opcao)
+                        {
+                            case 0:
+                                Console.Clear();
+                                return;
+                            case 1:
+                                flag = true;
+                                bool existe = false;
+                                Console.Clear();
+                                Console.Write("Indique o Genero: ");
+                                string genero = Console.ReadLine();
+                                Console.Clear();
+                                Console.WriteLine("LISTAGEM POR GENERO - {0}\n", genero);
+                                foreach (var livro in livros)
+                                {
+                                    if(livro.Genero == genero)
+                                    {
+                                        existe = true;
+                                        Console.WriteLine("ID: {0}\tISBN: {1}\tTítulo: {2}\tAutor: {3}\tPreço: {4}\tIVA: {5}\tStock: {6}",livro.Codigo, livro.ISBN, livro.Titulo, livro.Autor, livro.Preco, livro.TaxaIVA, livro.Stock);
+                                    }
+                                }
+                                if (!existe)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Não foram encontrados livros com esse genero!");
+                                }
+                                break;
+                            case 2:
+                                flag = true;
+                                bool existe2 = false;
+                                Console.Clear();
+                                Console.Write("Indique o Autor: ");
+                                string autor = Console.ReadLine();
+                                Console.Clear();
+                                Console.WriteLine("LISTAGEM POR AUTOR - {0}\n", autor);
+                                foreach (var livro in livros)
+                                {
+                                    if (livro.Autor == autor)
+                                    {
+                                        existe2 = true;
+                                        Console.WriteLine("ID: {0}\tISBN: {1}\tTítulo: {2}\tGenero: {3}\tPreço: {4}\tIVA: {5}\tStock: {6}", livro.Codigo, livro.ISBN, livro.Titulo, livro.Genero, livro.Preco, livro.TaxaIVA, livro.Stock);
+                                    }
+                                }
+                                if (!existe2)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Não foram encontrados livros com esse autor!");
+                                }
+                                break;
+                            case 3:
+                                flag = true;
+                                Console.Clear();
+                                Console.WriteLine("LISTAGEM GERAL\n");
+                                foreach (var livro in livros)
+                                {
+                                    Console.WriteLine("ID: {0}\tISBN: {1}\tTítulo: {2}\tAutor: {3}\tGenero: {4}\tPreço: {5}\tIVA: {6}\tStock: {7}", livro.Codigo, livro.ISBN, livro.Titulo, livro.Autor, livro.Genero, livro.Preco, livro.TaxaIVA, livro.Stock);
+                                }
+                                break;
+                            default:
+                                Console.WriteLine("Opção inválida");
+                                break;
+                        }
+                    }
+                    catch (FormatException)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Apenas números!");
+                        Thread.Sleep(500);
+                    }
+                }
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Não existem livros criados!");
+            }
+        }
+        public void consultarStocks()
+        {
+            Console.Clear();
+            bool flag = false;
+            bool flag2 = false;
+            int opcao;
+            if (livros.Count > 0)
+            {
+                Console.WriteLine("STOCKS");
+                Console.WriteLine("\n0 - VOLTAR");
+                Console.WriteLine("1 - Stock de Livro");
+                Console.WriteLine("2 - Stock GERAL");
+                Console.WriteLine("\nEscolha a opção: ");
+                while (!flag)
+                {
+                    try
+                    {
+                        opcao = Convert.ToInt32(Console.ReadLine());
+                        switch (opcao)
+                        {
+                            case 0:
+                                Console.Clear();
+                                return;
+                            case 1:
+                                flag = true;
+                                Console.Clear();
+                                Console.Write("Indique o ID ou o ISBN: ");
+                                int r = Convert.ToInt32(Console.ReadLine());
+                                Console.Clear();
 
+                                foreach (var livro in livros)
+                                {
+                                    if (livro.Codigo == r || livro.ISBN == r)
+                                    {
+                                        if (livro.Codigo == r)
+                                            Console.WriteLine("STOCK DO LIVRO COM O ID #{0}", r);
+                                        else
+                                            Console.WriteLine("STOCK DO LIVRO COM O ISBN {0}", r);
+                                        Console.WriteLine($"\nTítulo: {livro.Titulo}\nAutor: {livro.Autor}\nStock: {livro.Stock}");
+                                        flag2 = true;
+                                    }
+                                }
+                                if (!flag2)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Não foram encontrados livros com esse ISBN nem com esse ID!");
+                                    Thread.Sleep(500);
+                                }
+                                break;
+                            case 2:
+                                flag = true;
+                                Console.Clear();
+                                Console.WriteLine("O stock geral contabiliza um total de {0} livros disponíveis!", stockGeral);
+                                Thread.Sleep(500);
+                                break;
+                            default:
+                                Console.WriteLine("Opção inválida");
+                                break;
+                        }
+                    }
+                    catch (FormatException)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Apenas números!");
+                        Thread.Sleep(500);
+                    }
+                }
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Não existe nenhum stock disponível!");
+            }
         }
         // Outros métodos relacionados aos livros, como venda, atualização de estoque, etc.
     }
